@@ -1,8 +1,10 @@
-joblib
 fastapi
+uvicorn[standard]
 pydantic
+numpy
+pandas
 scikit-learn
-pandas 
-os 
-gdown 
+joblib
+gdown
 shap
+python-multipart
