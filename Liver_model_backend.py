@@ -6,7 +6,15 @@ import pandas as pd
 import os 
 import gdown  # pyright: ignore[reportMissingImports]
 import shap
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # allow all websites (development)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 sklearn.set_config(transform_output="pandas")
 model_path = r"C:\FrostByte Project\Liver disease prediction model(enhanced+calibrated(sigmoid)).joblib"
 model_url = "https://drive.google.com/file/d/1_FGkhAsOeO-dGBJ-FTqJgcmCxgo1W1Yl/view"
@@ -63,3 +71,4 @@ def Predictor(data: InputData):
     h_level = model.predict(df)
     response = model.predict_proba(df)[0][1]*100
     return {"Features responsible for this output": Exps , "Chances of Liver disease": f"{round(response , 2)}%" , "Risk Level":["Low" if h_level == 1 else "High"][0]}
+
