@@ -1,8 +1,8 @@
-fastapi
-uvicorn[standard]
-gdown
 joblib
-scikit-learn
-numpy
+fastapi
 pydantic
-python-multipart
+scikit-learn
+pandas 
+os 
+gdown 
+shap
