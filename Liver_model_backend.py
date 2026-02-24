@@ -3,10 +3,17 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import sklearn
 import pandas as pd 
+import os 
+import gdown  # pyright: ignore[reportMissingImports]
 import shap
 app = FastAPI()
 sklearn.set_config(transform_output="pandas")
-model = joblib.load(r"C:\FrostByte Project\Liver disease prediction model(enhanced+calibrated(sigmoid)).joblib")
+model_path = r"C:\FrostByte Project\Liver disease prediction model(enhanced+calibrated(sigmoid)).joblib"
+model_url = "https://drive.google.com/file/d/1_FGkhAsOeO-dGBJ-FTqJgcmCxgo1W1Yl/view"
+if not os.path.exists(model_path):
+    print("Downloading model.......")
+    gdown.download(model_url , model_path , quiet = False)
+model = joblib.load(model_path)
 rf_pipeline = model.calibrated_classifiers_[0].estimator
 class InputData(BaseModel):
     Age:int
